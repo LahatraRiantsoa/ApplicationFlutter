@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "image": "https://picsum.photos/seed/sac1/400/400",
+    "titre": "Sac à main cuir premium",
+    "description": "Sac en cuir véritable, fabrication artisanale. Doublure intérieure en coton et fermeture zippée sécurisée.",
+    "categorie": "Mode",
+    "prix": 89.90
+  },
+  {
+    "id": 2,
+    "image": "https://picsum.photos/seed/casque2/400/400",
+    "titre": "Casque audio sans fil",
+    "description": "Réduction de bruit active, autonomie 30h, compatible Bluetooth 5.2 avec micro intégré pour les appels.",
+    "categorie": "High-Tech",
+    "prix": 59.00
+  },
+  {
+    "id": 3,
+    "image": "https://picsum.photos/seed/canape3/400/400",
+    "titre": "Canapé 3 places velours",
+    "description": "Canapé confortable en velours côtelé, structure en bois massif, pieds en métal doré.",
+    "categorie": "Maison",
+    "prix": 449.00
+  },
+  {
+    "id": 4,
+    "image": "https://picsum.photos/seed/montre4/400/400",
+    "titre": "Montre connectée sport",
+    "description": "Suivi d'activité, fréquence cardiaque, GPS intégré et étanchéité 5 ATM. Autonomie 7 jours.",
+    "categorie": "High-Tech",
+    "prix": 129.99
+  },
+  {
+    "id": 5,
+    "image": "https://picsum.photos/seed/basket5/400/400",
+    "titre": "Baskets running légères",
+    "description": "Semelle amortissante en mousse, tige en mesh respirant, idéales pour la course sur route.",
+    "categorie": "Mode",
+    "prix": 74.50
+  },
+  {
+    "id": 6,
+    "image": "https://picsum.photos/seed/lampe6/400/400",
+    "titre": "Lampe de bureau LED",
+    "description": "Luminosité réglable sur 5 niveaux, port USB de recharge intégré, bras articulé.",
+    "categorie": "Maison",
+    "prix": 34.90
+  },
+  {
+    "id": 7,
+    "image": "https://picsum.photos/seed/veste7/400/400",
+    "titre": "Veste en jean oversize",
+    "description": "Coupe ample tendance, denim brut délavé, doublure intérieure douce.",
+    "categorie": "Mode",
+    "prix": 54.00
+  },
+  {
+    "id": 8,
+    "image": "https://picsum.photos/seed/enceinte8/400/400",
+    "titre": "Enceinte Bluetooth portable",
+    "description": "Son 360°, étanche IPX7, autonomie 12h, idéale pour l'extérieur.",
+    "categorie": "High-Tech",
+    "prix": 45.90
+  },
+  {
+    "id": 9,
+    "image": "https://picsum.photos/seed/vaisselle9/400/400",
+    "titre": "Service de vaisselle 18 pièces",
+    "description": "Porcelaine blanche fine, compatible lave-vaisselle et micro-ondes, design intemporel.",
+    "categorie": "Maison",
+    "prix": 69.90
+  },
+  {
+    "id": 10,
+    "image": "https://picsum.photos/seed/parfum10/400/400",
+    "titre": "Coffret parfum homme",
+    "description": "Eau de toilette 100ml et déodorant assorti, notes boisées et épicées.",
+    "categorie": "Mode",
+    "prix": 39.90
+  },
+  {
+    "id": 11,
+    "image": "https://picsum.photos/seed/tablette11/400/400",
+    "titre": "Tablette tactile 10 pouces",
+    "description": "Écran Full HD, 64Go de stockage, batterie longue durée, idéale pour le streaming.",
+    "categorie": "High-Tech",
+    "prix": 189.00
+  },
+  {
+    "id": 12,
+    "image": "https://picsum.photos/seed/plaid12/400/400",
+    "titre": "Plaid polaire moelleux",
+    "description": "Grand format 200x150cm, matière ultra douce, parfait pour les soirées d'hiver.",
+    "categorie": "Maison",
+    "prix": 24.90
+  }
+]
