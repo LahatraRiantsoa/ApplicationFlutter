@@ -52,6 +52,40 @@ class ApiService {
     throw ApiException(body['error'] as String? ?? 'Échec de la connexion');
   }
 
+  /// Crée un compte via POST /api/register puis renvoie l'utilisateur créé.
+  /// Lève une [ApiException] si l'email est déjà utilisé ou en cas d'erreur réseau.
+  static Future<User> register({
+    required String email,
+    required String password,
+    required String nom,
+    required String prenom,
+  }) async {
+    final Uri uri = Uri.parse('$baseUrl/register');
+    http.Response response;
+    try {
+      response = await http.post(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+          'nom': nom,
+          'prenom': prenom,
+        }),
+      );
+    } catch (_) {
+      throw ApiException('Impossible de contacter le serveur. Vérifiez votre connexion.');
+    }
+
+    final Map<String, dynamic> body = jsonDecode(response.body) as Map<String, dynamic>;
+
+    if (response.statusCode == 201) {
+      return User.fromJson(body);
+    }
+
+    throw ApiException(body['error'] as String? ?? 'Échec de la création du compte');
+  }
+
   /// Récupère la liste complète des produits via GET /api/produits.
   static Future<List<Produit>> fetchProduits() async {
     final Uri uri = Uri.parse('$baseUrl/produits');

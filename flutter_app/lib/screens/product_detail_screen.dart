@@ -1,16 +1,51 @@
 import 'package:flutter/material.dart';
 
 import '../models/produit.dart';
+import '../services/favorite_service.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   final Produit produit;
 
   const ProductDetailScreen({super.key, required this.produit});
 
   @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  bool _isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorite();
+  }
+
+  Future<void> _loadFavorite() async {
+    final favorites = await FavoriteService.getFavoriteIds();
+    if (mounted) setState(() => _isFavorite = favorites.contains(widget.produit.id));
+  }
+
+  Future<void> _toggleFavorite() async {
+    final favorites = await FavoriteService.toggleFavorite(widget.produit.id);
+    if (mounted) setState(() => _isFavorite = favorites.contains(widget.produit.id));
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final produit = widget.produit;
     return Scaffold(
-      appBar: AppBar(title: Text(produit.titre)),
+      appBar: AppBar(
+        title: Text(produit.titre),
+        actions: [
+          IconButton(
+            icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border),
+            color: _isFavorite ? Colors.red : null,
+            tooltip: _isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris',
+            onPressed: _toggleFavorite,
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

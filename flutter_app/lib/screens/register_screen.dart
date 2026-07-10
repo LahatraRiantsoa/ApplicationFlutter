@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 import '../services/session_service.dart';
 import 'products_screen.dart';
-import 'register_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _nomController = TextEditingController();
+  final _prenomController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -22,12 +23,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    _nomController.dispose();
+    _prenomController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  Future<void> _handleLogin() async {
+  Future<void> _handleRegister() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() {
@@ -36,18 +39,21 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      // Appel de l'API POST /api/login
-      final user = await ApiService.login(
-        _emailController.text.trim(),
-        _passwordController.text,
+      // Appel de l'API POST /api/register
+      final user = await ApiService.register(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        nom: _nomController.text.trim(),
+        prenom: _prenomController.text.trim(),
       );
 
-      // Sauvegarde de la session en local pour l'auto-login au prochain démarrage
+      // Le compte créé est directement connecté et la session sauvegardée en local
       await SessionService.saveUser(user);
 
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(
+      Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const ProductsScreen()),
+        (route) => false,
       );
     } catch (e) {
       setState(() => _errorMessage = e.toString());
@@ -59,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Connexion')),
+      appBar: AppBar(title: const Text('Créer un compte')),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -69,14 +75,36 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Icon(Icons.storefront, size: 72, color: Colors.deepPurple),
-                const SizedBox(height: 16),
-                Text(
-                  'Ventes Privées',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                TextFormField(
+                  controller: _prenomController,
+                  decoration: const InputDecoration(
+                    labelText: 'Prénom',
+                    prefixIcon: Icon(Icons.person_outline),
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Veuillez saisir votre prénom';
+                    }
+                    return null;
+                  },
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _nomController,
+                  decoration: const InputDecoration(
+                    labelText: 'Nom',
+                    prefixIcon: Icon(Icons.badge_outlined),
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Veuillez saisir votre nom';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -102,8 +130,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Veuillez saisir votre mot de passe';
+                    if (value == null || value.length < 6) {
+                      return 'Le mot de passe doit contenir au moins 6 caractères';
                     }
                     return null;
                   },
@@ -118,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
                 const SizedBox(height: 24),
                 FilledButton(
-                  onPressed: _isLoading ? null : _handleLogin,
+                  onPressed: _isLoading ? null : _handleRegister,
                   style: FilledButton.styleFrom(padding: const EdgeInsets.all(16)),
                   child: _isLoading
                       ? const SizedBox(
@@ -126,18 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 20,
                           child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                         )
-                      : const Text('Se connecter'),
-                ),
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: _isLoading
-                      ? null
-                      : () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (_) => const RegisterScreen()),
-                          );
-                        },
-                  child: const Text('Pas encore de compte ? Créer un compte'),
+                      : const Text('Créer mon compte'),
                 ),
               ],
             ),
