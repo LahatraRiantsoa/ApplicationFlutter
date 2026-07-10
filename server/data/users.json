@@ -12,5 +12,12 @@
     "password": "test123",
     "nom": "Mdm",
     "prenom": "Test"
+  },
+  {
+    "id": 3,
+    "email": "test5@gmail.com",
+    "password": "test1234",
+    "nom": "Lahatra",
+    "prenom": "Riantsoa"
   }
 ]
